@@ -22,12 +22,21 @@ def main() -> None:
             search_results = []
             movies = load_data.load_json_file("data/movies.json")
 
+            query = args.query.lower().translate(removal_table)
+            query_terms = query.split(" ")
+
+
+
             for i in range(len(movies)):
                 # print(f"Checking movie: {movies[i]['title'].lower().translate(removal_table)}")
-                if args.query.lower().translate(removal_table) in movies[i][
-                    "title"
-                ].lower().translate(removal_table):
-                    search_results.append(movies[i])
+                for term in query_terms:
+                    if term in movies[i]["title"].lower().translate(removal_table):
+                        search_results.append(movies[i])
+                    
+                # if args.query.lower().translate(removal_table) in movies[i][
+                #     "title"
+                # ].lower().translate(removal_table):
+                #     search_results.append(movies[i])
 
             if search_results:
                 print("Found movies:")
